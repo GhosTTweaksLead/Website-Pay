@@ -1,0 +1,705 @@
+Gib ein Premier von der Website preview 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Platform & Support</title>
+  <style>
+    :root {
+      --bg-black: #050505;
+      --card-bg: #0e0e0e;
+      --card-border: #222222;
+      --accent-white: #ffffff;
+      --text-muted: #888888;
+      --text-main: #e5e5e5;
+      --btn-bg: #ffffff;
+      --btn-text: #000000;
+      --danger: #ff4d4d;
+      --success: #28a745;
+      --warning: #ffaa00;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    header {
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 5, 5, 0.9);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--accent-white);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-dot {
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fff;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent-white);
+      color: var(--bg-black);
+      border-color: var(--accent-white);
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h2, h3 {
+      color: var(--accent-white);
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: #000000;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--accent-white);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent-white);
+    }
+
+    .btn {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-weight: 600;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      width: 100%;
+      transition: opacity 0.2s;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-white);
+      background: transparent;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-group input {
+      width: auto;
+    }
+
+    .invoice-details {
+      background: #000000;
+      border: 1px dashed var(--card-border);
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .invoice-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.8rem;
+    }
+
+    .invoice-row span:first-child {
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .status-pending { background: #261f00; color: #ffcc00; border: 1px solid #4d3d00; }
+    .status-paid { background: #0a2611; color: #28a745; border: 1px solid #144d23; }
+    .status-partial { background: #260d00; color: #ff6600; border: 1px solid #4d1a00; }
+
+    .pulse {
+      animation: pulseAnim 2s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid var(--card-border);
+      padding: 8px;
+      text-align: left;
+      font-size: 0.75rem;
+    }
+
+    th {
+      background: #000;
+      color: var(--text-muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 15px;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-dot"></div>
+      STORE PLATFORM
+    </div>
+    <nav>
+      <button class="nav-btn" onclick="showView('shop')">Shop</button>
+      <button class="nav-btn" onclick="showView('tickets')">Support</button>
+      <a class="nav-btn" href="https://discord.gg/UVZ2nPBadt" target="_blank">Discord</a>
+      <button class="nav-btn" onclick="showView('admin-login')">Admin</button>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- LOGIN -->
+    <div id="view-login" class="view-section active">
+      <div class="card" style="max-width: 400px; margin: 30px auto;">
+        <h2>Authentication</h2>
+        <p>Enter your email and accept store rules to continue.</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="login-email" placeholder="name@example.com" required>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms-check" required>
+            <label for="terms-check" style="margin-bottom:0; cursor:pointer;">I accept store rules and terms</label>
+          </div>
+          <button type="submit" class="btn">Enter Store</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- SHOP -->
+    <div id="view-shop" class="view-section">
+      <div class="card">
+        <h2>Product Selection</h2>
+        <p>Logged in as: <span id="user-display" style="color:#fff; font-weight:bold;"></span></p>
+
+        <div class="form-group">
+          <label>Product</label>
+          <select id="product-select" onchange="updateOptions()"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Duration / Option</label>
+          <select id="option-select" onchange="calculatePrice()"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Staff Tip ($0 - $100)</label>
+          <input type="number" id="tip-input" min="0" max="100" value="0" step="0.5" oninput="calculatePrice()">
+        </div>
+
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="crypto-select">
+            <option value="Litecoin (LTC)">Litecoin (LTC)</option>
+            <option value="Bitcoin (BTC)">Bitcoin (BTC)</option>
+            <option value="Ethereum (ETH)">Ethereum (ETH)</option>
+          </select>
+        </div>
+
+        <div class="invoice-details">
+          <div class="invoice-row"><span>Base Price:</span><span id="price-base">$0.00</span></div>
+          <div class="invoice-row"><span>Staff Tip:</span><span id="price-tip">$0.00</span></div>
+          <div class="invoice-row" style="font-weight:bold; color:#fff; border-top:1px solid #222; padding-top:6px;">
+            <span>Total USD:</span><span id="price-total">$0.00</span>
+          </div>
+        </div>
+
+        <button class="btn" onclick="submitOrder()">Proceed to Payment</button>
+      </div>
+    </div>
+
+    <!-- PAYMENT -->
+    <div id="view-payment" class="view-section">
+      <div class="card" style="max-width: 500px; margin: 0 auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2>Invoice Checkout</h2>
+          <span id="payment-status-badge" class="status-badge status-pending pulse">PENDING</span>
+        </div>
+        <p>Invoice ID: <span id="pay-invoice-id" style="color:#fff;"></span></p>
+
+        <div class="invoice-details">
+          <div class="invoice-row"><span>Product:</span><span id="pay-product"></span></div>
+          <div class="invoice-row"><span>Option:</span><span id="pay-option"></span></div>
+          <div class="invoice-row"><span>Total Due:</span><span id="pay-total-usd"></span></div>
+          <div class="invoice-row" style="border-top:1px solid #222; padding-top:6px;">
+            <span>Crypto Amount:</span><span id="pay-total-crypto" style="color:#fff; font-weight:bold;"></span>
+          </div>
+        </div>
+
+        <!-- UNDERPAID ALERT -->
+        <div id="underpaid-box" style="display:none; background:#260d00; border:1px solid #ff6600; padding:12px; border-radius:6px; margin-bottom:15px;">
+          <h4 style="color:#ff6600; margin-bottom:3px; font-size:0.85rem;">⚠️ Underpayment Detected</h4>
+          <p style="margin:0; font-size:0.75rem; color:#ccc;">Zu wenig Geld gesendet! Fehlender Restbetrag:</p>
+          <div style="font-size:1rem; font-weight:bold; color:#fff; margin-top:4px;" id="underpaid-amount">$0.00</div>
+        </div>
+
+        <div class="form-group">
+          <label>Transfer Address:</label>
+          <input type="text" id="pay-address" readonly style="font-family:monospace; font-size:0.75rem;">
+        </div>
+
+        <p class="pulse" style="text-align:center; font-size:0.7rem; color:#888;">
+          Polling blockchain every 5 seconds...
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:10px;">
+          <a class="btn" id="dc-redirect-btn" href="https://discord.gg/UVZ2nPBadt" target="_blank" style="display:none; background:var(--success); color:#fff;">Join Discord / Get Product</a>
+          <button class="btn btn-secondary" onclick="simulatePaymentTest()">Test: Send Partial/Underpayment</button>
+          <button class="btn btn-secondary" onclick="showView('tickets')">Need Help? Open Ticket</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div id="view-tickets" class="view-section">
+      <div class="card">
+        <h2>Support Tickets</h2>
+        <p>Ask questions about underpayments or order delivery.</p>
+        <form id="ticket-form">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="ticket-email" required>
+          </div>
+          <div class="form-group">
+            <label>Invoice ID (optional)</label>
+            <input type="text" id="ticket-invoice" placeholder="INV-XXXX">
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" id="ticket-subject" placeholder="e.g. Underpaid balance" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="ticket-message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn">Submit Ticket</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ADMIN LOGIN -->
+    <div id="view-admin-login" class="view-section">
+      <div class="card" style="max-width: 360px; margin: 30px auto;">
+        <h2>Admin Authentication</h2>
+        <form id="admin-login-form">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="admin-user" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="admin-pass" required>
+          </div>
+          <button type="submit" class="btn">Login</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="view-admin-dashboard" class="view-section">
+      <div class="card">
+        <h2>Admin Dashboard</h2>
+        <p>Manage orders and check simulated incoming payments.</p>
+
+        <h3>Active Orders</h3>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Invoice</th>
+                <th>Email</th>
+                <th>Product</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Remaining</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Store Platform &copy; 2026. All Rights Reserved.
+  </footer>
+
+  <script>
+    const ADMIN_WEBHOOK_URL = "https://discord.com/api/webhooks/1549806286554796125/KizdckOtzhJS7VY4WriofF9sR-Eei11q-BRvPtBolP-QuyogFMnC-Dj3KkoP_PJPir6S";
+
+    const PRODUCTS = {
+      "Fortnite Private": { "3 Days": 7.99, "1 Week": 13.99, "1 Month": 29.99 },
+      "Fortnite Public": { "3 Days": 4.99, "1 Week": 8.99, "1 Month": 18.99 },
+      "Temp Spoofer": { "3 Days": 6.99, "1 Week": 12.99, "1 Month": 25.99 },
+      "IPVanish": { "1 Week": 0.50, "1 Month": 2.99 }
+    };
+
+    const WALLETS = {
+      "Litecoin (LTC)": "LNPT3jNWXfYeXr1WHgp8RoBzUBp1SUftYB",
+      "Bitcoin (BTC)": "bc1q4j3vk8w0y96rwqyjrhlpylzm2uq37w25yly026",
+      "Ethereum (ETH)": "0xA7f7467Ef4b58AC7910391d8B465f1cEB1b2F401"
+    };
+
+    let appState = {
+      users: JSON.parse(localStorage.getItem('store_users') || '[]'),
+      orders: JSON.parse(localStorage.getItem('store_orders') || '{}'),
+      tickets: JSON.parse(localStorage.getItem('store_tickets') || '{}')
+    };
+
+    let currentUserEmail = null;
+    let activeInvoiceId = null;
+    let pollInterval = null;
+
+    function saveState() {
+      localStorage.setItem('store_users', JSON.stringify(appState.users));
+      localStorage.setItem('store_orders', JSON.stringify(appState.orders));
+      localStorage.setItem('store_tickets', JSON.stringify(appState.tickets));
+    }
+
+    async function sendWebhook(title, description, fields = []) {
+      try {
+        await fetch(ADMIN_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: "Store System",
+            embeds: [{ title, description, fields, timestamp: new Date().toISOString() }]
+          })
+        });
+      } catch (err) {
+        console.error("Webhook error:", err);
+      }
+    }
+
+    function showView(viewName) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      if (!currentUserEmail && (viewName === 'shop' || viewName === 'payment')) {
+        document.getElementById('view-login').classList.add('active');
+        return;
+      }
+      document.getElementById(`view-${viewName}`).classList.add('active');
+      if (viewName === 'admin-dashboard') renderAdminDashboard();
+    }
+
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      if (!appState.users.includes(email)) {
+        appState.users.push(email);
+        saveState();
+      }
+      currentUserEmail = email;
+      document.getElementById('user-display').innerText = email;
+      document.getElementById('ticket-email').value = email;
+      initShop();
+      showView('shop');
+    });
+
+    function initShop() {
+      const prodSelect = document.getElementById('product-select');
+      prodSelect.innerHTML = '';
+      Object.keys(PRODUCTS).forEach(prod => {
+        const opt = document.createElement('option');
+        opt.value = prod;
+        opt.innerText = prod;
+        prodSelect.appendChild(opt);
+      });
+      updateOptions();
+    }
+
+    function updateOptions() {
+      const prod = document.getElementById('product-select').value;
+      const optSelect = document.getElementById('option-select');
+      optSelect.innerHTML = '';
+      Object.keys(PRODUCTS[prod]).forEach(optKey => {
+        const opt = document.createElement('option');
+        opt.value = optKey;
+        opt.innerText = `${optKey} - $${PRODUCTS[prod][optKey].toFixed(2)}`;
+        optSelect.appendChild(opt);
+      });
+      calculatePrice();
+    }
+
+    function calculatePrice() {
+      const prod = document.getElementById('product-select'].value;
+      const opt = document.getElementById('option-select').value;
+      const basePrice = PRODUCTS[prod][opt] || 0;
+      const tip = parseFloat(document.getElementById('tip-input').value) || 0;
+      const total = basePrice + tip;
+
+      document.getElementById('price-base').innerText = `$${basePrice.toFixed(2)}`;
+      document.getElementById('price-tip').innerText = `$${tip.toFixed(2)}`;
+      document.getElementById('price-total').innerText = `$${total.toFixed(2)}`;
+    }
+
+    async function submitOrder() {
+      const prod = document.getElementById('product-select').value;
+      const opt = document.getElementById('option-select').value;
+      const basePrice = PRODUCTS[prod][opt];
+      const tip = parseFloat(document.getElementById('tip-input').value) || 0;
+      const totalPrice = parseFloat((basePrice + tip).toFixed(2));
+      const cryptoType = document.getElementById('crypto-select').value;
+
+      const invoiceId = 'INV-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+      
+      const order = {
+        invoiceId,
+        email: currentUserEmail,
+        product: prod,
+        option: opt,
+        totalPrice,
+        cryptoType,
+        cryptoAddress: WALLETS[cryptoType],
+        cryptoAmount: (totalPrice / 85).toFixed(4),
+        status: 'PENDING',
+        remainingPrice: 0
+      };
+
+      appState.orders[invoiceId] = order;
+      saveState();
+      activeInvoiceId = invoiceId;
+
+      renderPaymentScreen(order);
+      showView('payment');
+      startPolling();
+
+      await sendWebhook("🚨 New Order", `Invoice: ${invoiceId}`, [
+        { name: "Customer", value: currentUserEmail, inline: true },
+        { name: "Total", value: `$${totalPrice.toFixed(2)}`, inline: true }
+      ]);
+    }
+
+    function renderPaymentScreen(order) {
+      document.getElementById('pay-invoice-id').innerText = order.invoiceId;
+      document.getElementById('pay-product').innerText = order.product;
+      document.getElementById('pay-option').innerText = order.option;
+      document.getElementById('pay-total-usd').innerText = `$${order.totalPrice.toFixed(2)}`;
+      document.getElementById('pay-total-crypto').innerText = `${order.cryptoAmount} ${order.cryptoType.split(' ')[1]}`;
+      document.getElementById('pay-address').value = order.cryptoAddress;
+
+      const badge = document.getElementById('payment-status-badge');
+      const dcBtn = document.getElementById('dc-redirect-btn');
+      const underpaidBox = document.getElementById('underpaid-box');
+
+      badge.innerText = order.status;
+      if (order.status === 'PAID') {
+        badge.className = 'status-badge status-paid';
+        dcBtn.style.display = 'block';
+        underpaidBox.style.display = 'none';
+      } else if (order.status === 'PARTIAL') {
+        badge.className = 'status-badge status-partial';
+        dcBtn.style.display = 'none';
+        underpaidBox.style.display = 'block';
+        document.getElementById('underpaid-amount').innerText = `$${order.remainingPrice.toFixed(2)} fehlen`;
+      } else {
+        badge.className = 'status-badge status-pending pulse';
+        dcBtn.style.display = 'none';
+        underpaidBox.style.display = 'none';
+      }
+    }
+
+    // Automatischer Polling-Checker, der jetzt die lokalen Daten aktualisiert
+    function startPolling() {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(() => {
+        if (!activeInvoiceId) return;
+        appState.orders = JSON.parse(localStorage.getItem('store_orders') || '{}');
+        const order = appState.orders[activeInvoiceId];
+        if (order) renderPaymentScreen(order);
+      }, 3000);
+    }
+
+    // Testfunktion, um zu zeigen, wie eine Unterzahlung (Partial) live greift
+    function simulatePaymentTest() {
+      if (!activeInvoiceId) return;
+      const missing = (appState.orders[activeInvoiceId].totalPrice * 0.4).toFixed(2);
+      appState.orders[activeInvoiceId].status = 'PARTIAL';
+      appState.orders[activeInvoiceId].remainingPrice = parseFloat(missing);
+      saveState();
+      renderPaymentScreen(appState.orders[activeInvoiceId]);
+    }
+
+    document.getElementById('ticket-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("Ticket submitted successfully!");
+    });
+
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('admin-user').value;
+      const pass = document.getElementById('admin-pass').value;
+      if (user === 'xaver' && pass === '2011') {
+        showView('admin-dashboard');
+      } else {
+        alert("Falsche Zugangsdaten!");
+      }
+    });
+
+    function renderAdminDashboard() {
+      appState.orders = JSON.parse(localStorage.getItem('store_orders') || '{}');
+      const tbody = document.getElementById('admin-orders-table');
+      tbody.innerHTML = '';
+      Object.values(appState.orders).forEach(ord => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ord.invoiceId}</td>
+          <td>${ord.email}</td>
+          <td>${ord.product}</td>
+          <td>$${ord.totalPrice.toFixed(2)}</td>
+          <td><b>${ord.status}</b></td>
+          <td>$${ord.remainingPrice.toFixed(2)}</td>
+          <td>
+            <button onclick="setOrderStatus('${ord.invoiceId}', 'PAID', 0)">Paid</button>
+            <button onclick="setOrderStatus('${ord.invoiceId}', 'PARTIAL', 2.50)">Underpaid</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setOrderStatus(invoiceId, status, remaining) {
+      appState.orders[invoiceId].status = status;
+      appState.orders[invoiceId].remainingPrice = remaining;
+      saveState();
+      renderAdminDashboard();
+    }
+  </script>
+</body>
+</html>
